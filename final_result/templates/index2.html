@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>二手鞋价格风险识别系统</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: #f4f7f6; padding: 40px 0; }
+        .card { border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: none; }
+        .integrity-box { background: #fffbe6; border-left: 5px solid #ffe58f; padding: 15px; border-radius: 4px; }
+        .price-box { background: #e6f7ff; border-left: 5px solid #1890ff; padding: 15px; margin-top: 15px; border-radius: 4px; }
+        .preview-container { min-height: 200px; display: flex; align-items: center; justify-content: center; background: #eee; border-radius: 8px; margin-top: 10px; }
+        #image-preview, .old-img { max-width: 100%; max-height: 350px; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <div class="container" style="max-width: 950px;">
+        <div class="text-center mb-4">
+            <h2 class="mb-1">👟 二手鞋价格风险识别系统</h2>
+        </div>
+        <div class="card p-4 mb-4">
+            <form method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="old_img_name" value="{{ img_name }}">
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label><strong>1. 上传鞋子照片</strong></label>
+                        <input type="file" name="file" class="form-control-file mb-2" onchange="showPreview(this)">
+                        <div class="preview-container">
+                            {% if img_name %}<img src="{{ url_for('uploaded_file', filename=img_name) }}" class="old-img" id="existing-img">{% endif %}
+                            <img id="image-preview" style="display:none;">
+                        </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label><strong>2. 商家描述</strong></label>
+                        <textarea name="user_desc" class="form-control" rows="8" placeholder="包含品牌、种类、真伪、成色及价格...">{{ user_text if user_text }}</textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block mt-3">标价风险识别</button>
+            </form>
+        </div>
+        {% if result %}
+        <div class="card p-4 shadow">
+            <h5 class="border-bottom pb-2 mb-3">风险评估报告结果：</h5>
+            <div class="row">
+                <div class="col-md-6 border-right">
+                    <p><strong>真伪检测：</strong> <span class="badge badge-{{ res_color }}">{{ result }}</span> ({{ prediction_percentage }}%)</p>
+                    <p><strong>品牌识别：</strong> <span class="badge badge-primary">{{ brand_name }}</span> ({{ brand_reliability }}%)</p>
+                    <p><strong>品类识别：</strong> <span class="badge badge-secondary">{{ shoe_type }}</span> ({{ shoe_reliability }}%)</p>
+                    <p><strong>成色鉴定：</strong> <span class="badge badge-{{ health_color }}">{{ health_status }}</span> (分值: {{ health_score }})</p>
+                    <div class="price-box">
+                        <p class="mb-1 font-weight-bold">建议参考价：</p>
+                        <h3 class="text-primary">{{ suggested_price }}</h3>
+                        <p class="mb-0" style="font-size: 11px; color: #666;">{{ price_formula | safe }}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="integrity-box">
+                        <p class="mb-1 font-weight-bold">🔍 语义验证真实度评估：</p>
+                        <div>{{ integrity_msg | safe }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <script>
+        function showPreview(input) {
+            const preview = document.getElementById('image-preview');
+            const existing = document.getElementById('existing-img');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    if(existing) existing.style.display = 'none';
+                    preview.src = e.target.result; preview.style.display = 'block';
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+</body>
+</html>
