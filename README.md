@@ -23,6 +23,17 @@ The system takes one shoe image and a seller description as input, then outputs:
 - `Types-of-Shoes-main/`: shoe type classification training project
 - `price/`: pricing-related resources
 
+## Dataset
+
+Due to the large file size (~2.1GB), the training dataset is hosted externally:
+
+- **Kaggle**: [在此替换你的Kaggle链接] (License: CC BY-NC 4.0)
+- **Baidu Netdisk**: [通过网盘分享的文件：Research-on-Pricing-Risk-of-Shoes
+链接: https://pan.baidu.com/s/19m3OMBkwnUkPLntqvFW_IQ?pwd=Wisa 提取码: Wisa 
+--来自百度网盘超级会员v5的分享] (Extraction Code: `Wisa`)
+
+Please download and extract the content into the respective training folders before running the scripts.
+
 ## Main System
 
 Run the web application locally:
