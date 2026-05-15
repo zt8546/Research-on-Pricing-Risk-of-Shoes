@@ -5,7 +5,6 @@ from model import predict_integrated, analyze_integrity, get_price_info
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 
-# 启动时自动创建 uploads 目录，防止首次运行报错
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 @app.route('/uploads/<filename>')
@@ -50,7 +49,7 @@ def index():
                     img_name=img_name,     user_text=user_desc
                 )
             except Exception:
-                # 打印完整报错到终端，同时在页面上给用户提示
+        
                 traceback.print_exc()
                 error_msg = "模型推理出错，请检查终端日志。"
         else:

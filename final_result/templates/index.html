@@ -7,8 +7,16 @@
     <style>
         body { background: #f4f7f6; padding: 40px 0; }
         .card { border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: none; }
-        .integrity-box { background: #fffbe6; border-left: 5px solid #ffe58f; padding: 15px; border-radius: 4px; }
-        .price-box { background: #e6f7ff; border-left: 5px solid #1890ff; padding: 15px; margin-top: 15px; border-radius: 4px; }
+        .integrity-box { background: #fffbe6; border-left: 5px solid #ffe58f; padding: 22px; border-radius: 4px; }
+        .price-box { background: #e6f7ff; border-left: 5px solid #1890ff; padding: 18px; margin-top: 18px; border-radius: 4px; }
+        /* 结果区整体放大字体 */
+        .result-card h5 { font-size: 22px; }
+        .result-card p { font-size: 18px; margin-bottom: 14px; }
+        .result-card .badge { font-size: 16px; }
+        .price-box .mb-1 { font-size: 19px; }
+        .price-box h3 { font-size: 34px; }
+        .price-box p:last-child { font-size: 14px !important; }
+        .integrity-box .box-title { font-size: 21px; }
         .preview-container { min-height: 200px; display: flex; align-items: center; justify-content: center; background: #eee; border-radius: 8px; margin-top: 10px; }
         #image-preview, .old-img { max-width: 100%; max-height: 350px; border-radius: 8px; }
     </style>
@@ -50,7 +58,7 @@
     </div>
 
     {% if result %}
-    <div class="card p-4 shadow">
+    <div class="card p-4 shadow result-card">
         <h5 class="border-bottom pb-2 mb-3">风险评估报告结果：</h5>
         <div class="row">
             <div class="col-md-6 border-right">
@@ -77,8 +85,8 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="integrity-box">
-                    <p class="mb-1 font-weight-bold">🔍 语义验证真实度评估：</p>
+                <div class="integrity-box h-100">
+                    <p class="mb-3 font-weight-bold box-title">🔍 语义验证真实度评估：</p>
                     <div>{{ integrity_msg | safe }}</div>
                 </div>
             </div>
